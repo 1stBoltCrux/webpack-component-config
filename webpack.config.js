@@ -5,9 +5,9 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 
-let components = ['testOne', 'testTwo']
+const components = ['testOne', 'testTwo']
 
-let multipleHtmlFiles = components.map((entryName) => {
+const multipleHtmlFiles = components.map((entryName) => {
   return new HtmlWebpackPlugin({
     filename: `components/${entryName}/index.html`,
     template: `./${entryName}/index.html`,
@@ -15,7 +15,10 @@ let multipleHtmlFiles = components.map((entryName) => {
   })
 })
 
+console.log(__dirname + '/dist/components')
+
 module.exports = {
+  watch: true,
   entry: {
     testOne: "./testOne/testOne.js",
     testTwo: "./testTwo/testTwo.js",
@@ -23,6 +26,7 @@ module.exports = {
   output: {
     filename: "components/[name]/[name].js",
     path: path.resolve(__dirname, "dist"),
+    publicPath: ""
   },
   module: {
     rules: [
@@ -38,6 +42,10 @@ module.exports = {
       new CssMinimizerPlugin(),
       new TerserPlugin()
     ]
+  },
+  devServer: {
+    contentBase: path.resolve(__dirname, 'dist'),
+    port: 9000
   },
   plugins: [
     new MiniCssExtractPlugin({
