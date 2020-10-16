@@ -12,7 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "html-webpack-plugin": "^4.5.0",
-    "webpack": "^5.1.0",
+    "node-sass": "^4.14.1",
     "webpack-cli": "^4.0.0"
   },
   "devDependencies": {
@@ -20,8 +20,11 @@
     "css-loader": "^5.0.0",
     "css-minimizer-webpack-plugin": "^1.1.5",
     "mini-css-extract-plugin": "^1.0.0",
+    "sass": "^1.27.0",
+    "sass-loader": "^10.0.3",
     "style-loader": "^2.0.0",
     "terser-webpack-plugin": "^5.0.0",
+    "webpack": "^5.1.2",
     "webpack-dev-server": "^3.11.0"
   }
 }
