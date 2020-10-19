@@ -13,8 +13,6 @@ const htmlFiles = [];
 
 const componentsContents = fs.readdirSync(`${__dirname}/components`);
 
-// read component directories
-
 for (let i = 0; i < componentsContents.length; i++) {
   const componentDirectory = componentsContents[i];
 
@@ -33,12 +31,8 @@ for (let i = 0; i < componentsContents.length; i++) {
 
     for (let i = 0; i < componentContents.length; i++) {
       const file = componentContents[i];
-      if (file.match(/index\.js/)) {
-        entries.push(`${componentDirectory}/${file}`);
-      }
-      if (file.match(/index\.html/)) {
-        htmlFiles.push(`${componentDirectory}/${file}`);
-      }
+      if (file.match(/index\.js/)) entries.push(`${componentDirectory}/${file}`);   
+      if (file.match(/index\.html/)) htmlFiles.push(`${componentDirectory}/${file}`);
     }
   }
 }
@@ -48,7 +42,7 @@ const multipleHtmlFiles = htmlFiles.map((entryName) => {
   const [directory, fileName] = entryName.split("/");
   return new HtmlWebpackPlugin({
     filename: `components/${directory}/${fileName}`,
-    template: `./components/${directory}/${fileName}`,
+    template: `components/${directory}/${fileName}`,
     chunks: [directory],
   });
 });
