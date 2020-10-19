@@ -1,7 +1,12 @@
 ## Folder & File Structure for Webpack - 
 
-Component folders are at the root level
+Create simple components in the 'components' directory.
 
-Components should be in a folder sharing the same name as their js file
+Make sure to have an index.html and an index.js!
 
-Components should be accompanied by an index.scss and an index.html file
+Webpack is configured to minify css/scss and js.
+
+npm run build - builds components to dist/components - each one having their own
+template/css/js files
+
+npm run start - starts a dev server on port 9000 - example: localhost:9000/components/<your-components-directory-name>

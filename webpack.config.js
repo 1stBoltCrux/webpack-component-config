@@ -28,6 +28,9 @@ for (let i = 0; i < componentsContents.length; i++) {
     const componentContents = fs.readdirSync(
       `${__dirname}/components/${componentDirectory}`
     );
+
+      // grab index.html and index.js files
+
     for (let i = 0; i < componentContents.length; i++) {
       const file = componentContents[i];
       if (file.match(/index\.js/)) {
