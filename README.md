@@ -8,7 +8,7 @@ Webpack is configured to minify css/scss and js.
 
 ### Commands
 
-*npm run build* - builds components to dist/components - each one having their own
+**npm run build** - builds components to dist/components - each one having their own
 template/css/js files
 
-*npm run start* - starts webpack-dev-server on port 9000 - *example: localhost:9000/components/<your-components-directory-name>*
+**npm run start** - starts webpack-dev-server on port 9000 - *example: localhost:9000/components/<your-components-directory-name>*
