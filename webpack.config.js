@@ -28,12 +28,14 @@ for (let i = 0; i < componentsContents.length; i++) {
       `${__dirname}/components/${componentDirectory}`
     );
 
-      // grab index.html and index.js files
+    // grab index.html and index.js files
 
     for (let i = 0; i < componentContents.length; i++) {
       const file = componentContents[i];
-      if (file.match(/index\.js/)) entries.push(`${componentDirectory}/${file}`);   
-      if (file.match(/index\.html/)) htmlFiles.push(`${componentDirectory}/${file}`);
+      if (file.match(/index\.js/))
+        entries.push(`${componentDirectory}/${file}`);
+      if (file.match(/index\.html/))
+        htmlFiles.push(`${componentDirectory}/${file}`);
     }
   }
 }
@@ -55,10 +57,10 @@ const multipleEntries = entries.reduce((acc, curr) => {
 }, {});
 
 module.exports = {
-  mode: 'development',
+  mode: "development",
   watch: true,
   entry: multipleEntries,
-  devtool: 'inline-source-map',
+  devtool: "inline-source-map",
   output: {
     filename: "components/[name]/index.js",
     path: path.resolve(__dirname, "dist"),
@@ -67,7 +69,7 @@ module.exports = {
   module: {
     rules: [
       {
-        exclude: '/node_modules/',
+        exclude: "/node_modules/",
         test: /\.s[ac]ss$/i,
         use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
       },
@@ -75,15 +77,20 @@ module.exports = {
   },
   optimization: {
     minimize: true,
-    minimizer: [new CssMinimizerPlugin(), new TerserPlugin()],
+    minimizer: [
+      new CssMinimizerPlugin(),
+      new TerserPlugin({
+        parallel: true,
+      }),
+    ],
   },
   devServer: {
     port: 9000,
   },
   plugins: [
     new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery'
+      $: "jquery",
+      jQuery: "jquery",
     }),
     new MiniCssExtractPlugin({
       filename: "components/[name]/index.css",

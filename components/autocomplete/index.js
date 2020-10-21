@@ -10,7 +10,7 @@ const counties = [
   "Clatasadasdsp",
   "Colussssa",
   "Coos",
-  "Crook",
+  "Crooked",
   "Curry",
   "Deschutes",
   "Douglas",
