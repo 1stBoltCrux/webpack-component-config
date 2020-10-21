@@ -5,6 +5,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
+const webpack = require("webpack");
 
 const entries = [];
 const htmlFiles = [];
@@ -54,8 +55,10 @@ const multipleEntries = entries.reduce((acc, curr) => {
 }, {});
 
 module.exports = {
+  mode: 'development',
   watch: true,
   entry: multipleEntries,
+  devtool: 'inline-source-map',
   output: {
     filename: "components/[name]/index.js",
     path: path.resolve(__dirname, "dist"),
@@ -64,6 +67,7 @@ module.exports = {
   module: {
     rules: [
       {
+        exclude: '/node_modules/',
         test: /\.s[ac]ss$/i,
         use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
       },
@@ -74,10 +78,13 @@ module.exports = {
     minimizer: [new CssMinimizerPlugin(), new TerserPlugin()],
   },
   devServer: {
-    contentBase: path.resolve(__dirname, "dist"),
     port: 9000,
   },
   plugins: [
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery'
+    }),
     new MiniCssExtractPlugin({
       filename: "components/[name]/index.css",
     }),
