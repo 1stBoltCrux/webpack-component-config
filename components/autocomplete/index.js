@@ -6,15 +6,15 @@ const formattedDate = format(new Date(), "MM/dd/yyyy");
 const counties = [
   "Baker",
   "Benton",
-  "Clkas",
-  "Clatasadasdsp",
-  "Colussssa",
+  "Clackamas",
+  "Clatsop",
+  "Columbia",
   "Coos",
-  "Crooked",
+  "Crook",
   "Curry",
   "Deschutes",
   "Douglas",
-  "Gilliam HOOOOOOOOOOOOOOFFFFFFFFFFFFFFFFFFsssF",
+  "Gilliam",
 ];
 
 $("#testInput").autocomplete({

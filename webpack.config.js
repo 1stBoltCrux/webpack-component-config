@@ -71,7 +71,22 @@ module.exports = {
       {
         exclude: "/node_modules/",
         test: /\.s[ac]ss$/i,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          {
+            loader: "postcss-loader",
+            options: {
+              postcssOptions: {
+                plugins: [
+                  'precss',
+                  'autoprefixer'
+                ]
+              }
+            },
+          },
+          "sass-loader",
+        ],
       },
     ],
   },
