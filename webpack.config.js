@@ -78,11 +78,8 @@ module.exports = {
             loader: "postcss-loader",
             options: {
               postcssOptions: {
-                plugins: [
-                  'precss',
-                  'autoprefixer'
-                ]
-              }
+                plugins: ["precss", "autoprefixer"],
+              },
             },
           },
           "sass-loader",
@@ -100,9 +97,13 @@ module.exports = {
     ],
   },
   devServer: {
+    hot: true,
+    contentBase: "./dist",
     port: 9000,
   },
   plugins: [
+    new webpack.debug.ProfilingPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
     new webpack.ProvidePlugin({
       $: "jquery",
       jQuery: "jquery",
