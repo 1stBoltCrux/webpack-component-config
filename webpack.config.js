@@ -4,10 +4,7 @@ const HtmlWebpackTagsPlugin = require("html-webpack-tags-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-const TerserPlugin = require("terser-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
-const webpack = require("webpack");
 
 const entries = [];
 const htmlFiles = [];
@@ -48,19 +45,21 @@ const multipleHtmlFiles = htmlFiles.map((entryName) => {
   return new HtmlWebpackPlugin({
     filename: `components/${directory}/${fileName}`,
     template: `components/${directory}/${fileName}`,
-    chunks: [directory],
+    chunks: [directory]
   });
 });
 
 // generates component entries
 const multipleEntries = entries.reduce((acc, curr) => {
   const [directory, fileName] = curr.split("/");
-  return { ...acc, [directory]: `./components/${directory}/${fileName}` };
+  return {
+    ...acc,
+    [directory]: [`./components/${directory}/${fileName}`, './scss/global.scss']
+  };
 }, {});
 
 module.exports = {
   mode: "development",
-  watch: true,
   entry: multipleEntries,
   devtool: "inline-source-map",
   output: {
@@ -68,8 +67,31 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     publicPath: "",
   },
+  optimization: {
+    minimize: false,
+    splitChunks: {
+      cacheGroups: {
+        styles: {
+          name: "styles",
+          test: /\.s[ac]ss$/i,
+          chunks: "all",
+          enforce: true,
+        },
+      },
+    },
+  },
   module: {
     rules: [
+      {
+        test: /\.m?js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env"],
+          },
+        },
+      },
       {
         exclude: "/node_modules/",
         test: /\.s[ac]ss$/i,
@@ -80,7 +102,7 @@ module.exports = {
             loader: "postcss-loader",
             options: {
               postcssOptions: {
-                plugins: ["precss", "autoprefixer"],
+                plugins: ["precss", "autoprefixer"]
               },
             },
           },
@@ -89,17 +111,7 @@ module.exports = {
       },
     ],
   },
-  optimization: {
-    minimize: true,
-    minimizer: [
-      new CssMinimizerPlugin(),
-      new TerserPlugin({
-        parallel: true,
-      }),
-    ],
-  },
   devServer: {
-    hot: true,
     contentBase: "./dist",
     port: 9000,
   },
@@ -107,9 +119,8 @@ module.exports = {
     new CopyPlugin({
       patterns: [{ from: "assets", to: "assets" }],
     }),
-    new webpack.HotModuleReplacementPlugin(),
     new MiniCssExtractPlugin({
-      filename: "components/[name]/index.css",
+      filename: "./UIToolkit.css",
     }),
     new CleanWebpackPlugin(),
     ...multipleHtmlFiles,
@@ -120,7 +131,7 @@ module.exports = {
         "assets/bootstrap/js/bootstrap.min.js",
         "assets/devbridge-autocomplete/devbridge-autocomplete.js",
         "assets/bootstrap/css/bootstrap-reboot.css",
-        "assets/bootstrap/css/bootstrap.min.css"
+        "assets/bootstrap/css/bootstrap.min.css",
       ],
       append: false,
     }),

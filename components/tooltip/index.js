@@ -9,4 +9,8 @@ import "./index.scss";
         }
     })
 
+    const thing = () => {
+        console.log('woof')
+    }
+
 
