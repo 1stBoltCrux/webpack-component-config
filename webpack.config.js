@@ -118,6 +118,6 @@ module.exports = {
     }),
     new CleanWebpackPlugin(),
     ...multipleHtmlFiles,
-    new HtmlWebpackTagsPlugin({ tags: ['assets/jquery/jquery.js', 'assets/popper/popper.js', 'assets/bootstrap/js/bootstrap.min.js', ], append: false }),
+    new HtmlWebpackTagsPlugin({ tags: ['assets/jquery/jquery.js', 'assets/popper/popper.js', 'assets/bootstrap/js/bootstrap.min.js', 'assets/devbridge-autocomplete/devbridge-autocomplete.js' ], append: false }),
   ],
 };

@@ -1,5 +1,4 @@
 import "./index.scss";
-import autocomplete from "devbridge-autocomplete";
 
 const counties = [
   "Baker",
