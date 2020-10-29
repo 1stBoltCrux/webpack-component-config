@@ -1,7 +1,6 @@
 import "./index.scss";
 import autocomplete from "devbridge-autocomplete";
 
-const formattedDate = format(new Date(), "MM/dd/yyyy");
 const counties = [
   "Baker",
   "Benton",

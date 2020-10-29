@@ -1,10 +1,12 @@
 const fs = require("fs");
 const path = require("path");
+const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
+const CopyPlugin = require('copy-webpack-plugin')
 const webpack = require("webpack");
 
 const entries = [];
@@ -51,10 +53,13 @@ const multipleHtmlFiles = htmlFiles.map((entryName) => {
 });
 
 // generates component entries
-const multipleEntries = entries.reduce((acc, curr) => {
-  const [directory, fileName] = curr.split("/");
-  return { ...acc, [directory]: `./components/${directory}/${fileName}` };
-}, {});
+const multipleEntries = entries.reduce(
+  (acc, curr) => {
+    const [directory, fileName] = curr.split("/");
+    return { ...acc, [directory]: `./components/${directory}/${fileName}` };
+  },
+  {}
+);
 
 module.exports = {
   mode: "development",
@@ -102,16 +107,17 @@ module.exports = {
     port: 9000,
   },
   plugins: [
-    new webpack.debug.ProfilingPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.ProvidePlugin({
-      $: "jquery",
-      jQuery: "jquery",
+    new CopyPlugin({
+      patterns: [
+        {from: 'assets', to: 'assets'}
+      ]
     }),
+    new webpack.HotModuleReplacementPlugin(),
     new MiniCssExtractPlugin({
       filename: "components/[name]/index.css",
     }),
     new CleanWebpackPlugin(),
     ...multipleHtmlFiles,
+    new HtmlWebpackTagsPlugin({ tags: ['assets/jquery/jquery.js', 'assets/popper/popper.js', 'assets/bootstrap/js/bootstrap.min.js', ], append: false }),
   ],
 };

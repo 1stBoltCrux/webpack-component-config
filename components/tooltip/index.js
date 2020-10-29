@@ -1,13 +1,12 @@
-import "bootstrap";
 import "./index.scss";
 
-console.log("ok");
+    $(".saif-tooltip").on({
+        focus: function(){
+            $(this).tooltip('toggle');
+        },
+        mouseover: function(){
+            $(this).tooltip('toggle');
+        }
+    })
 
-$("#tooltip").on({
-    focus: function(){
-        $(this).tooltip('toggle');
-    },
-    mouseover: function(){
-        $(this).tooltip('toggle');
-    }
-})
+
